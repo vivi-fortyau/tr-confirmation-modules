@@ -237,6 +237,42 @@
   .internal-note em { font-style: normal; color: #92400E; font-weight: 600; }
   body.hide-notes .internal-note { display: none; }
 </style>
+<style id="michael-overrides">
+  /* Scoped overrides for Michael's review file only — do not affect index.html */
+  /* Comment 3: relocate Network role badges into a clean labelled row
+     (they previously floated at the perimeter and overlapped the bullets) */
+  #mod-network .role-strip {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: center;
+    align-items: center;
+    margin: 32px 0 4px;
+    padding-top: 26px;
+    border-top: 1px solid var(--n-200);
+  }
+  #mod-network .role-strip .strip-label {
+    width: 100%;
+    text-align: center;
+    font-family: var(--font-body);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--n-500);
+    margin-bottom: 6px;
+  }
+  #mod-network .role-strip .role-cluster {
+    position: static !important;
+    inset: auto !important;
+    top: auto !important;
+    bottom: auto !important;
+    left: auto !important;
+    right: auto !important;
+    transform: none !important;
+    opacity: 1 !important;
+  }
+</style>
 </head>
 <body>
 
@@ -576,36 +612,39 @@
         </div>
       </div>
 
-      <!-- Role badges positioned around the outer stage -->
-      <div class="role-cluster cluster-1" data-role="0">
-        <span class="role-badge">
-          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><ellipse cx="8" cy="3.5" rx="5" ry="1.5"/><path d="M3 3.5V12c0 .83 2.24 1.5 5 1.5s5-.67 5-1.5V3.5"/><path d="M3 7.75c0 .83 2.24 1.5 5 1.5s5-.67 5-1.5"/></svg>
-          Custodian
-        </span>
-      </div>
-      <div class="role-cluster cluster-2" data-role="1">
-        <span class="role-badge">
-          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M2 7l6-4 6 4"/><path d="M3 7v6h10V7"/><path d="M6 13V9h4v4"/></svg>
-          Bank
-        </span>
-      </div>
-      <div class="role-cluster cluster-3" data-role="2">
-        <span class="role-badge">
-          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M8 9c-2 0-3.5 1.5-3.5 3.5V14h7v-1.5C11.5 10.5 10 9 8 9z"/><circle cx="8" cy="5.5" r="2"/></svg>
-          Fund Admin
-        </span>
-      </div>
-      <div class="role-cluster cluster-4" data-role="3">
-        <span class="role-badge">
-          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M8 1.5v11"/><path d="M3 5h10"/><path d="M5 5L3 9c0 1 1 1.5 2 1.5s2-.5 2-1.5L5 5z"/><path d="M11 5L9 9c0 1 1 1.5 2 1.5s2-.5 2-1.5L11 5z"/></svg>
-          Law Firms
-        </span>
-      </div>
-      <div class="role-cluster cluster-5" data-role="4">
-        <span class="role-badge">
-          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="5" r="2.5"/><path d="M3 14v-1a4 4 0 0 1 4-4h2a4 4 0 0 1 4 4v1"/></svg>
-          Auditor
-        </span>
+      <!-- Role badges — clean labelled strip (relocated per Michael's note) -->
+      <div class="role-strip">
+        <span class="strip-label">Everyone in the chain, already connected</span>
+        <div class="role-cluster cluster-1" data-role="0">
+          <span class="role-badge">
+            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><ellipse cx="8" cy="3.5" rx="5" ry="1.5"/><path d="M3 3.5V12c0 .83 2.24 1.5 5 1.5s5-.67 5-1.5V3.5"/><path d="M3 7.75c0 .83 2.24 1.5 5 1.5s5-.67 5-1.5"/></svg>
+            Custodian
+          </span>
+        </div>
+        <div class="role-cluster cluster-2" data-role="1">
+          <span class="role-badge">
+            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M2 7l6-4 6 4"/><path d="M3 7v6h10V7"/><path d="M6 13V9h4v4"/></svg>
+            Bank
+          </span>
+        </div>
+        <div class="role-cluster cluster-3" data-role="2">
+          <span class="role-badge">
+            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M8 9c-2 0-3.5 1.5-3.5 3.5V14h7v-1.5C11.5 10.5 10 9 8 9z"/><circle cx="8" cy="5.5" r="2"/></svg>
+            Fund Admin
+          </span>
+        </div>
+        <div class="role-cluster cluster-4" data-role="3">
+          <span class="role-badge">
+            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M8 1.5v11"/><path d="M3 5h10"/><path d="M5 5L3 9c0 1 1 1.5 2 1.5s2-.5 2-1.5L5 5z"/><path d="M11 5L9 9c0 1 1 1.5 2 1.5s2-.5 2-1.5L11 5z"/></svg>
+            Law Firms
+          </span>
+        </div>
+        <div class="role-cluster cluster-5" data-role="4">
+          <span class="role-badge">
+            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="5" r="2.5"/><path d="M3 14v-1a4 4 0 0 1 4-4h2a4 4 0 0 1 4 4v1"/></svg>
+            Auditor
+          </span>
+        </div>
       </div>
 
       <!-- Bottom stat strip -->

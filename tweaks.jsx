@@ -1,7 +1,7 @@
 /* @jsx React.createElement */
 
 const TWEAK_DEFAULTS = {
-  logos: "off",        // logo section off until launch logos land
+  logos: "on",         // logo examples now sit after "Evidence you can stand behind"
   testimonials: "1",   // 1 = dark blue · 2/3 = white, orange shadow, clickable
   secondBtn: "off",    // Module 01 second button (for "other pages")
   ctaSub: "on",        // Closing CTA subheading
