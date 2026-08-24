@@ -237,8 +237,275 @@
   .internal-note em { font-style: normal; color: #92400E; font-weight: 600; }
   body.hide-notes .internal-note { display: none; }
 </style>
+<style id="michael-overrides">
+  /* Scoped overrides for Michael's review file only — do not affect index.html */
+  /* Comment 3: relocate Network role badges into a clean labelled row
+     (they previously floated at the perimeter and overlapped the bullets) */
+  #mod-network .role-strip {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: center;
+    align-items: center;
+    margin: 32px 0 4px;
+    padding-top: 26px;
+    border-top: 1px solid var(--n-200);
+  }
+  #mod-network .role-strip .strip-label {
+    width: 100%;
+    text-align: center;
+    font-family: var(--font-body);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--n-500);
+    margin-bottom: 6px;
+  }
+  #mod-network .role-strip .role-cluster {
+    position: static !important;
+    inset: auto !important;
+    top: auto !important;
+    bottom: auto !important;
+    left: auto !important;
+    right: auto !important;
+    transform: none !important;
+    opacity: 1 !important;
+  }
+</style>
+<style id="feedback-additions">
+  /* ══ Sticky top nav — matches TR main-page header ══════════ */
+  .site-nav {
+    position: sticky; top: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    gap: 24px; padding: 15px 48px;
+    background: rgba(255,255,255,0.94);
+    backdrop-filter: saturate(160%) blur(10px);
+    -webkit-backdrop-filter: saturate(160%) blur(10px);
+    border-bottom: 1px solid var(--n-200);
+  }
+  .site-nav .brand { display: flex; align-items: center; gap: 11px; text-decoration: none; }
+  .site-nav .brand .brand-logo { height: 26px; display: block; }
+  .site-nav .brand .brand-fallback { display: none; align-items: center; gap: 11px; }
+  .site-nav .brand .mark { width: 30px; height: 30px; display: block; flex-shrink: 0; }
+  .site-nav .brand .name {
+    font-family: var(--font-body); font-weight: 700; font-size: 19px;
+    color: var(--n-900); letter-spacing: -0.02em; white-space: nowrap;
+  }
+  .site-nav .links { display: flex; align-items: center; gap: 30px; }
+  .site-nav .links a {
+    display: inline-flex; align-items: center; gap: 5px;
+    font-family: var(--font-body); font-size: 15px; font-weight: 500;
+    color: #404040; text-decoration: none; transition: color 200ms var(--ease-out); white-space: nowrap;
+  }
+  .site-nav .links a .caret { width: 11px; height: 11px; opacity: 0.6; }
+  .site-nav .links a:hover { color: var(--orange); }
+  .site-nav .actions { display: flex; align-items: center; gap: 18px; }
+  .site-nav .lang { display: inline-flex; align-items: center; gap: 6px; font-family: var(--font-body); font-size: 15px; font-weight: 500; color: #404040; cursor: pointer; white-space: nowrap; }
+  .site-nav .lang svg { width: 15px; height: 15px; }
+  .site-nav .help {
+    width: 26px; height: 26px; border-radius: 50%; background: var(--n-900);
+    color: #fff; display: grid; place-items: center; font-size: 13px; font-weight: 700; cursor: pointer;
+  }
+  .site-nav .signin {
+    font-family: var(--font-body); font-size: 15px; font-weight: 700; color: #fff;
+    background: var(--orange); padding: 10px 22px; border-radius: 6px; text-decoration: none;
+    transition: background 200ms var(--ease-out); white-space: nowrap;
+  }
+  .site-nav .signin:hover { background: var(--orange-hover); }
+
+  /* ══ Module 01 — prominent Get Started (high up) ═══════════ */
+  .wi2-cta { display: flex; justify-content: center; gap: 14px; margin-top: 30px; flex-wrap: wrap; }
+  .btn-primary-lg {
+    display: inline-flex; align-items: center; gap: 9px;
+    background: var(--orange); color: #fff; font-family: var(--font-body);
+    font-size: 16px; font-weight: 600; padding: 15px 30px; border-radius: 8px;
+    text-decoration: none; box-shadow: var(--shadow-orange);
+    transition: background 200ms var(--ease-out), transform 150ms var(--ease-out);
+  }
+  .btn-primary-lg:hover { background: var(--orange-hover); transform: translateY(-1px); }
+  .btn-primary-lg svg { width: 17px; height: 17px; }
+  .btn-secondary-lg {
+    display: inline-flex; align-items: center; gap: 9px;
+    background: #fff; color: var(--n-900); border: 1px solid var(--n-300);
+    font-family: var(--font-body); font-size: 16px; font-weight: 600;
+    padding: 15px 30px; border-radius: 8px; text-decoration: none;
+    transition: border-color 200ms var(--ease-out), color 200ms var(--ease-out);
+  }
+  .btn-secondary-lg:hover { border-color: var(--orange); color: var(--orange); }
+  /* second button = "option on other pages" — off on the homepage by default */
+  .wi2-cta .btn-secondary-lg { display: none; }
+  body[data-second-btn="on"] .wi2-cta .btn-secondary-lg { display: inline-flex; }
+
+  /* ══ Logo section (its own block, toggled OFF until launch) ═ */
+  #mod-logos { display: none; }
+  body[data-logos="on"] #mod-logos { display: block; }
+  #mod-logos .tr-head { margin-bottom: 36px; }
+
+  /* ══ Video section (YouTube) ══════════════════════════════ */
+  .video-sec { padding: 96px 64px; border-bottom: 1px solid var(--n-200); background: var(--n-900); }
+  .video-inner { max-width: 1000px; margin: 0 auto; text-align: center; }
+  .video-sec .nm-kicker { color: var(--amber); text-align: center; }
+  .video-sec .nm-title { color: #fff; max-width: 720px; margin: 0 auto; }
+  .video-sec .nm-desc { color: rgba(255,255,255,0.72); margin: 16px auto 0; max-width: 620px; }
+  .video-frame {
+    position: relative; width: 100%; aspect-ratio: 16 / 9; margin-top: 40px;
+    border-radius: 16px; overflow: hidden; background: #000;
+    box-shadow: 0 34px 70px -22px rgba(0,0,0,0.55);
+  }
+  .video-frame iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+  .video-facade { position: absolute; inset: 0; display: block; text-decoration: none; }
+  .video-facade img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+  .video-facade::after { content: ''; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(0,0,0,0.05), rgba(0,0,0,0.45)); }
+  .video-facade .play {
+    position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+    width: 58px; height: 58px; border-radius: 50%; background: var(--orange);
+    display: grid; place-items: center; box-shadow: 0 10px 26px rgba(0,0,0,0.38);
+    transition: transform 200ms var(--ease-out), background 200ms var(--ease-out); z-index: 1;
+  }
+  .video-facade:hover .play { transform: translate(-50%, -50%) scale(1.08); background: var(--orange-hover); }
+  .video-facade .play svg { width: 22px; height: 22px; fill: #fff; margin-left: 3px; }
+
+  /* ══ Module 04 — testimonials (1 dark / 2-3 white clickable) ═ */
+  .tr-actions { display: flex; justify-content: center; margin-top: 24px; }
+  .btn-outline {
+    display: inline-flex; align-items: center; gap: 8px;
+    border: 1px solid var(--n-300); color: var(--n-900); background: #fff;
+    font-family: var(--font-body); font-size: 15px; font-weight: 600;
+    padding: 12px 24px; border-radius: 8px; text-decoration: none; white-space: nowrap;
+    transition: border-color 200ms var(--ease-out), color 200ms var(--ease-out);
+  }
+  .btn-outline:hover { border-color: var(--orange); color: var(--orange); }
+  .btn-outline svg { width: 16px; height: 16px; }
+
+  .tst2-wrap { position: relative; margin-top: 8px; }
+  .tst2-grid { display: grid; gap: 24px; align-items: stretch; }
+  body[data-tst="1"] .tst2-grid { grid-template-columns: 1fr; max-width: 760px; margin: 0 auto; }
+  body[data-tst="2"] .tst2-grid { grid-template-columns: repeat(2, 1fr); }
+  body[data-tst="3"] .tst2-grid { grid-template-columns: repeat(3, 1fr); }
+  .tst2-card {
+    position: relative; border-radius: 20px; padding: 36px 34px; text-decoration: none;
+    display: flex; flex-direction: column; overflow: hidden;
+    background: #fff; color: #404040; border: 1px solid var(--n-200);
+    box-shadow: 0 10px 30px -12px rgba(214,64,0,0.28); cursor: pointer;
+    transition: background 420ms var(--ease-out), color 420ms var(--ease-out),
+                border-color 240ms var(--ease-out), box-shadow 240ms var(--ease-out), transform 240ms var(--ease-out);
+  }
+  .tst2-card:hover { border-color: var(--orange); box-shadow: 0 18px 46px -14px rgba(214,64,0,0.45); transform: translateY(-3px); }
+  .tst2-card .mark { font-family: var(--font-heading); font-size: 56px; font-weight: 700; line-height: 0.5; height: 26px; color: var(--orange); }
+  /* Testimonial copy matches Heading 4 / Module 03 item titles */
+  .tst2-card .q { font-family: var(--font-heading); font-size: 18px; font-weight: 600; line-height: 1.45; letter-spacing: -0.01em; margin: 22px 0 26px; text-wrap: pretty; color: inherit; flex: 1; }
+  .tst2-card .by { display: flex; align-items: center; gap: 12px; padding-top: 20px; border-top: 1px solid var(--n-100); }
+  .tst2-card .ini { width: 42px; height: 42px; border-radius: 50%; font-family: var(--font-body); font-weight: 700; font-size: 14px; display: grid; place-items: center; flex-shrink: 0; background: var(--orange-10); color: var(--orange); }
+  .tst2-card .who { display: flex; flex-direction: column; }
+  .tst2-card .nm { font-family: var(--font-body); font-size: 14px; font-weight: 600; }
+  .tst2-card .rl { font-family: var(--font-body); font-size: 12px; opacity: 0.7; }
+  .tst2-cta { display: inline-flex; align-items: center; gap: 6px; margin-top: 18px; font-family: var(--font-body); font-size: 13px; font-weight: 700; color: var(--orange); }
+  .tst2-cta svg { width: 14px; height: 14px; }
+  body[data-tst="1"] .tst2-cta { display: none; }
+  body[data-tst="1"] .tst2-nav, body[data-tst="1"] .tst2-dots { display: none; }
+  /* carousel highlight — the centre card is blue, the rest stay light */
+  .tst2-card.is-center { background: #011B35; color: #fff; border-color: #011B35; box-shadow: 0 18px 46px -16px rgba(1,27,53,0.55); }
+  .tst2-card.is-center .mark { color: var(--amber); }
+  .tst2-card.is-center .by { border-top-color: rgba(255,255,255,0.16); }
+  .tst2-card.is-center .ini { background: rgba(255,255,255,0.14); color: #fff; }
+  .tst2-card.is-center .tst2-cta { color: var(--amber); }
+  .tst2-nav {
+    position: absolute; top: 50%; transform: translateY(-50%); z-index: 3;
+    width: 44px; height: 44px; border-radius: 50%; background: #fff;
+    border: 1px solid var(--n-200); display: grid; place-items: center; cursor: pointer;
+    box-shadow: 0 6px 18px -6px rgba(16,24,40,0.28); transition: border-color 200ms var(--ease-out);
+  }
+  .tst2-nav:hover { border-color: var(--orange); }
+  .tst2-nav svg { width: 18px; height: 18px; stroke: #404040; }
+  .tst2-nav.prev { left: -22px; }
+  .tst2-nav.next { right: -22px; }
+  .tst2-dots { display: flex; justify-content: center; gap: 8px; margin-top: 28px; }
+  .tst2-dots button { width: 8px; height: 8px; border-radius: 50%; border: 0; padding: 0; cursor: pointer; background: var(--n-300); transition: background 200ms var(--ease-out), width 200ms var(--ease-out); }
+  .tst2-dots button.on { background: var(--orange); width: 22px; border-radius: 4px; }
+
+  /* ══ Closing CTA — flat orange band, no nested boxes ═══════ */
+  .closing-cta { background: var(--orange); padding: 104px 48px; text-align: center; }
+  .closing-cta h2 { font-family: var(--font-heading); font-size: 42px; font-weight: 500; line-height: 1.12; letter-spacing: -0.02em; color: #fff; margin: 0 auto; max-width: 820px; text-wrap: balance; }
+  .closing-cta .sub { font-family: 'Clario', Arial, sans-serif; font-size: 21px; line-height: 29px; color: rgba(255,255,255,0.88); margin: 20px auto 0; max-width: 640px; }
+  .closing-cta .btn-primary-lg { margin-top: 34px; background: #fff; color: var(--orange); box-shadow: none; }
+  .closing-cta .btn-primary-lg:hover { background: #FFF1E8; color: var(--orange); }
+
+  /* ══ Typography spec (matches confirmation.com) ═══════════ */
+  /* Titles → #404040 (not near-black). Dark-bg headings keep white below. */
+  .nm-title, .wi2-role, .wi-node-role, .wi-hub .label, .wn-card h3,
+  .wy-item h4, .module-title, .tr-quote .q, .tst2-card .q { color: #404040; }
+  /* Orange accents */
+  .nm-title em, .wi2-role em, .nm-kicker, .wi-node-role em { color: #d64000; }
+  /* Paragraphs → Clario-Regular, 21px/29px, #666 */
+  .nm-desc {
+    font-family: 'Clario', Arial, sans-serif; font-size: 21px; line-height: 29px; color: #666;
+  }
+  .wy-stat .cap { font-family: 'Clario', Arial, sans-serif; font-size: 21px; line-height: 29px; color: #fff; }
+  .wn-card p.body, .wy-item p {
+    font-family: 'Clario', Arial, sans-serif; font-size: 16px; line-height: 24px; color: #404040;
+  }
+  /* Buttons → fully rounded pill, sizes per confirmation.com (10px root: 1.9rem≈19px, .5rem 2.4rem≈5/24px) */
+  .btn-primary-lg, .btn-secondary-lg, .btn-outline, .site-nav .signin {
+    border-radius: 9999px; padding: .5rem 2.4rem; font-size: 19px; white-space: nowrap;
+  }
+  .btn-secondary-lg, .btn-outline { color: #404040; }
+  /* keep dark-surface headings/paragraphs readable (white) */
+  .video-sec .nm-title { color: #fff; }
+  .video-sec .nm-desc { color: rgba(255,255,255,0.72); }
+  body[data-cta-sub="off"] .closing-cta .sub { display: none; }
+  body[data-cta-space="compact"] .closing-cta { padding: 64px 48px; }
+
+  /* wider Module 01 text block */
+  .wi2-head .nm-title { max-width: 860px; }
+  .wi2-head .nm-desc { max-width: 780px; }
+
+  /* ══ Responsive ═══════════════════════════════════════════ */
+  @media (max-width: 760px) {
+    .site-nav .links { display: none; }
+    .site-nav { padding: 12px 24px; }
+    .video-sec { padding: 64px 24px; }
+    .closing-cta h2 { font-size: 30px; }
+    .closing-cta { padding: 72px 24px; }
+    /* keep the module-01 flow arrows visible on mobile: the whole scene is one
+       SVG, so it scales down as a unit rather than dropping the connectors */
+    .wi2-scene { max-width: 100%; overflow: visible; }
+    .wi2-scene svg { overflow: visible; }
+    body[data-tst="2"] .tst2-grid, body[data-tst="3"] .tst2-grid { grid-template-columns: 1fr; }
+    .tst2-nav.prev { left: -6px; }
+    .tst2-nav.next { right: -6px; }
+  }
+</style>
 </head>
-<body>
+<template id="__bundler_thumbnail" data-bg-color="#011B35">
+  <svg viewBox="0 0 1200 800" xmlns="http://www.w3.org/2000/svg">
+    <rect width="1200" height="800" fill="#011B35"/>
+    <path d="M600 250 L720 320 L720 460 L600 550 L480 460 L480 320 Z" fill="none" stroke="#D64000" stroke-width="14" stroke-linejoin="round"/>
+    <path d="M552 400 L588 440 L668 350" fill="none" stroke="#17B26A" stroke-width="18" stroke-linecap="round" stroke-linejoin="round"/>
+  </svg>
+</template>
+<body data-tst="1" data-logos="on" data-second-btn="off" data-cta-sub="on" data-cta-space="normal">
+
+<header class="site-nav" data-screen-label="Top nav">
+  <a class="brand" href="#" aria-label="Thomson Reuters Confirmation">
+    <img class="brand-logo" src="https://www.confirmation.com/wp-content/uploads/2024/07/tr_hrz_logo_rgb_color-1.svg" alt="Thomson Reuters" onerror="this.style.display='none';this.nextElementSibling.style.display='inline-flex'"/>
+    <span class="brand-fallback">
+      <span class="mark"><svg viewBox="0 0 32 32" fill="none"><g fill="#D64000"><circle cx="16" cy="2.5" r="2"/><circle cx="23.5" cy="5" r="1.6"/><circle cx="28" cy="11" r="1.6"/><circle cx="29" cy="17" r="2"/><circle cx="27" cy="23" r="1.6"/><circle cx="22" cy="27.5" r="1.6"/><circle cx="16" cy="29" r="2"/><circle cx="10" cy="27.5" r="1.6"/><circle cx="5" cy="23" r="1.6"/><circle cx="3" cy="17" r="2"/><circle cx="4" cy="11" r="1.6"/><circle cx="8.5" cy="5" r="1.6"/></g></svg></span>
+      <span class="name">Thomson Reuters</span>
+    </span>
+  </a>
+  <nav class="links">
+    <a href="#">Our Solutions <svg class="caret" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 4.5L6 7.5L9 4.5"/></svg></a>
+    <a href="#">Who We Help <svg class="caret" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 4.5L6 7.5L9 4.5"/></svg></a>
+    <a href="#">Resources <svg class="caret" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 4.5L6 7.5L9 4.5"/></svg></a>
+    <a href="#">About <svg class="caret" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 4.5L6 7.5L9 4.5"/></svg></a>
+  </nav>
+  <div class="actions">
+    <span class="lang"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4"><circle cx="8" cy="8" r="6.2"/><path d="M1.8 8h12.4M8 1.8c1.9 1.9 1.9 10.5 0 12.4M8 1.8c-1.9 1.9-1.9 10.5 0 12.4"/></svg> Language</span>
+    <span class="help">?</span>
+    <a class="signin" href="#">Sign In</a>
+  </div>
+</header>
 
 <!-- Module 01 (mod-whatis) -->
 <section class="nm-module" id="mod-whatis" data-screen-label="What is it">
@@ -247,55 +514,13 @@
       <p class="nm-kicker">Module 01 · What is it<span class="nm-new">New</span></p>
       <h2 class="nm-title">Financial confirmations, <em>connected</em>.</h2>
       <p class="nm-desc">Client, auditor and bank each play a role, and Confirmation is the secure link that ties all three together. One request authorized at the source, verified evidence back in days.</p>
+      <div class="wi2-cta">
+        <a class="btn-primary-lg" href="#">Get Started <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8h10M9 5l3 3-3 3"/></svg></a>
+        <a class="btn-secondary-lg" href="#">Contact us</a>
+      </div>
     </div>
     <div class="wi2-scene">
       <svg id="wi-iso" viewBox="0 0 900 580" preserveAspectRatio="xMidYMid meet" role="img" aria-label="Confirmation connects client, auditor and bank"></svg>
-    </div>
-  </div>
-</section>
-
-<!-- Module 02 (mod-whoneeds) -->
-<section class="nm-module" id="mod-whoneeds" data-screen-label="Who needs it">
-  <div class="nm-inner">
-    <div class="wn-head">
-      <p class="nm-kicker">Module 02 · Who needs it<span class="nm-new">New</span></p>
-      <h2 class="nm-title">One platform. Three ways to verify.</h2>
-      <p class="nm-desc">Whether you're closing an audit, validating a balance, or verifying an asset, Confirmation gets you a trusted answer from the source.</p>
-    </div>
-
-    <div class="wn-grid">
-      <article class="wn-card">
-        <div class="wn-icon">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><path d="m9 15 2 2 4-4"/>
-          </svg>
-        </div>
-        <h3>Bank confirmations</h3>
-        <p class="wn-lead">Simplify and accelerate your audit process.</p>
-        <p class="body">Confirmation delivers automated audit confirmations with a platform that's fast, simple, and secure.</p>
-      </article>
-
-      <article class="wn-card">
-        <div class="wn-icon">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M3 3v18h18"/><path d="m7 14 3-3 3 3 5-6"/>
-          </svg>
-        </div>
-        <h3>Open banking</h3>
-        <p class="wn-lead">See the full financial picture.</p>
-        <p class="body">Access real-time account balances and transaction data to validate financial status with confidence.</p>
-      </article>
-
-      <article class="wn-card">
-        <div class="wn-icon">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="m9 12 2 2 4-4"/>
-          </svg>
-        </div>
-        <h3>Asset verification</h3>
-        <p class="wn-lead">Verify critical financial data.</p>
-        <p class="body">Get a guaranteed response from in-network banks on bank references, verifications of deposit, mortgage reverifications, and government benefits eligibility (HUD).</p>
-      </article>
     </div>
   </div>
 </section>
@@ -370,15 +595,13 @@
   </div>
 </section>
 
-<!-- Module 04 (mod-trust) -->
-<section class="nm-module nm-module--alt" id="mod-trust" data-screen-label="Why trust us">
+<!-- Logo section (own block; toggled OFF until launch logos land) -->
+<section class="nm-module logo-strip" id="mod-logos" data-screen-label="Trusted by">
   <div class="nm-inner">
     <div class="tr-head">
-      <p class="nm-kicker">Module 04 · Why you can trust us<span class="nm-new">New</span></p>
+      <p class="nm-kicker">Trusted by</p>
       <h2 class="nm-title">Relied on by audit teams worldwide.</h2>
-      <p class="nm-desc">From regional firms to global networks, finance and audit professionals trust Confirmation for evidence that holds up.</p>
     </div>
-
     <div class="tr-logos" id="tr-logos">
       <div class="tr-logo"><span class="glyph"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="4" y="4" width="16" height="16" rx="3"/><path d="M8 12h8"/></svg></span><span class="wordmark">Northfield</span></div>
       <div class="tr-logo"><span class="glyph"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="8"/><path d="M12 8v8"/></svg></span><span class="wordmark">Atlas&nbsp;&amp;&nbsp;Vance</span></div>
@@ -388,34 +611,88 @@
       <div class="tr-logo"><span class="glyph"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 2 4 7v10l8 5 8-5V7z"/><path d="M12 7v10"/></svg></span><span class="wordmark">Sterling</span></div>
     </div>
     <p class="tr-placeholder-note">Placeholder logos for mock-up only. Final firms &amp; banks to be confirmed by TR.</p>
+  </div>
+</section>
 
-    <div class="tr-quotes">
-      <div class="tr-quote">
-        <div class="mark">&ldquo;</div>
-        <p class="q">A guaranteed response from the network means we stopped chasing banks entirely. The evidence just shows up, verified and ready for review.</p>
-        <div class="by">
-          <div class="ini">JS</div>
-          <div class="who">
-            <span class="nm">Jack Snyder</span>
-            <span class="rl">CPA · Audit partner</span>
-          </div>
-        </div>
-      </div>
+<!-- Module 02 (mod-whoneeds) -->
+<section class="nm-module" id="mod-whoneeds" data-screen-label="Who needs it">
+  <div class="nm-inner">
+    <div class="wn-head">
+      <p class="nm-kicker">Module 02 · Who needs it<span class="nm-new">New</span></p>
+      <h2 class="nm-title">One platform. Three ways to verify.</h2>
+      <p class="nm-desc">Whether you're closing an audit, validating a balance, or verifying an asset, Confirmation gets you a trusted answer from the source.</p>
+    </div>
 
-      <div class="tr-quote">
-        <div class="mark">&ldquo;</div>
-        <p class="q">We trust the confirmations because they come straight from the source. That's the part our reviewers care about most.</p>
-        <div class="by">
-          <div class="ini">AH</div>
-          <div class="who">
-            <span class="nm">Andy Hines</span>
-            <span class="rl">CPA · Senior manager</span>
-          </div>
+    <div class="wn-grid">
+      <article class="wn-card">
+        <div class="wn-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><path d="m9 15 2 2 4-4"/>
+          </svg>
         </div>
-      </div>
+        <h3>Bank confirmations</h3>
+        <p class="wn-lead">Simplify and accelerate your audit process.</p>
+        <p class="body">Confirmation delivers automated audit confirmations with a platform that's fast, simple, and secure.</p>
+      </article>
+
+      <article class="wn-card">
+        <div class="wn-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M3 3v18h18"/><path d="m7 14 3-3 3 3 5-6"/>
+          </svg>
+        </div>
+        <h3>Open banking</h3>
+        <p class="wn-lead">See the full financial picture.</p>
+        <p class="body">Access real-time account balances and transaction data to validate financial status with confidence.</p>
+      </article>
+
+      <article class="wn-card">
+        <div class="wn-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="m9 12 2 2 4-4"/>
+          </svg>
+        </div>
+        <h3>Asset verification</h3>
+        <p class="wn-lead">Verify critical financial data.</p>
+        <p class="body">Get a guaranteed response from in-network banks on bank references, verifications of deposit, mortgage reverifications, and government benefits eligibility (HUD).</p>
+      </article>
     </div>
   </div>
 </section>
+
+<!-- Video section -->
+<section class="video-sec" id="mod-video" data-screen-label="Watch">
+  <div class="video-inner">
+    <h2 class="nm-title">See TR Confirmation in action.</h2>
+    <p class="nm-desc">A short walkthrough of how a request goes from created to confirmed — the whole loop in minutes, not weeks.</p>
+    <div class="video-frame">
+      <a class="video-facade" href="https://www.youtube.com/watch?v=WE9TAW_xG1Y" target="_blank" rel="noopener" aria-label="Watch the walkthrough on YouTube">
+        <img src="assets/video-poster-v2.png" alt="See TR Confirmation in action"/>
+        <span class="play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- Module 04 (mod-trust) — testimonials -->
+<section class="nm-module nm-module--alt" id="mod-trust" data-screen-label="Why trust us">
+  <div class="nm-inner">
+    <div class="tr-head">
+      <p class="nm-kicker">Module 04 · Why you can trust us<span class="nm-new">New</span></p>
+      <h2 class="nm-title">Relied on by audit teams worldwide.</h2>
+      <p class="nm-desc">From regional firms to global networks, finance and audit professionals trust Confirmation for evidence that holds up.</p>
+      <div class="tr-actions">
+        <a class="btn-outline" href="#">Customer Stories <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8h10M9 5l3 3-3 3"/></svg></a>
+      </div>
+    </div>
+
+    <div class="tst2-wrap">
+      <button class="tst2-nav prev" type="button" aria-label="Previous testimonial"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg></button>
+      <div class="tst2-grid" id="tst2-grid"></div>
+      <button class="tst2-nav next" type="button" aria-label="Next testimonial"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5l7 7-7 7"/></svg></button>
+      <div class="tst2-dots" id="tst2-dots"></div>
+    </div>
+  </section>
 
 <!-- Module 05 (mod-network) -->
 <section class="module" id="mod-network" data-screen-label="01 Pre-Contracted Network">
@@ -426,13 +703,6 @@
         <h2 class="module-title">A network already contracted with the world's banks.</h2>
         <p class="module-desc">No setup. No per-bank onboarding. Send a request and it lands inside a global hub built on years of pre-signed agreements with thousands of financial institutions.</p>
       </div>
-      <button class="module-replay" data-replay="network" type="button">
-        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M2 8a6 6 0 0 1 10.24-4.24L14 5.5"/>
-          <path d="M14 2v3.5h-3.5"/>
-        </svg>
-        Replay
-      </button>
     </div>
 
     <div class="hero-stage">
@@ -576,36 +846,39 @@
         </div>
       </div>
 
-      <!-- Role badges positioned around the outer stage -->
-      <div class="role-cluster cluster-1" data-role="0">
-        <span class="role-badge">
-          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><ellipse cx="8" cy="3.5" rx="5" ry="1.5"/><path d="M3 3.5V12c0 .83 2.24 1.5 5 1.5s5-.67 5-1.5V3.5"/><path d="M3 7.75c0 .83 2.24 1.5 5 1.5s5-.67 5-1.5"/></svg>
-          Custodian
-        </span>
-      </div>
-      <div class="role-cluster cluster-2" data-role="1">
-        <span class="role-badge">
-          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M2 7l6-4 6 4"/><path d="M3 7v6h10V7"/><path d="M6 13V9h4v4"/></svg>
-          Bank
-        </span>
-      </div>
-      <div class="role-cluster cluster-3" data-role="2">
-        <span class="role-badge">
-          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M8 9c-2 0-3.5 1.5-3.5 3.5V14h7v-1.5C11.5 10.5 10 9 8 9z"/><circle cx="8" cy="5.5" r="2"/></svg>
-          Fund Admin
-        </span>
-      </div>
-      <div class="role-cluster cluster-4" data-role="3">
-        <span class="role-badge">
-          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M8 1.5v11"/><path d="M3 5h10"/><path d="M5 5L3 9c0 1 1 1.5 2 1.5s2-.5 2-1.5L5 5z"/><path d="M11 5L9 9c0 1 1 1.5 2 1.5s2-.5 2-1.5L11 5z"/></svg>
-          Law Firms
-        </span>
-      </div>
-      <div class="role-cluster cluster-5" data-role="4">
-        <span class="role-badge">
-          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="5" r="2.5"/><path d="M3 14v-1a4 4 0 0 1 4-4h2a4 4 0 0 1 4 4v1"/></svg>
-          Auditor
-        </span>
+      <!-- Role badges — clean labelled strip (relocated per Michael's note) -->
+      <div class="role-strip">
+        <span class="strip-label">Everyone in the chain, already connected</span>
+        <div class="role-cluster cluster-1" data-role="0">
+          <span class="role-badge">
+            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><ellipse cx="8" cy="3.5" rx="5" ry="1.5"/><path d="M3 3.5V12c0 .83 2.24 1.5 5 1.5s5-.67 5-1.5V3.5"/><path d="M3 7.75c0 .83 2.24 1.5 5 1.5s5-.67 5-1.5"/></svg>
+            Custodian
+          </span>
+        </div>
+        <div class="role-cluster cluster-2" data-role="1">
+          <span class="role-badge">
+            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M2 7l6-4 6 4"/><path d="M3 7v6h10V7"/><path d="M6 13V9h4v4"/></svg>
+            Bank
+          </span>
+        </div>
+        <div class="role-cluster cluster-3" data-role="2">
+          <span class="role-badge">
+            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M8 9c-2 0-3.5 1.5-3.5 3.5V14h7v-1.5C11.5 10.5 10 9 8 9z"/><circle cx="8" cy="5.5" r="2"/></svg>
+            Fund Admin
+          </span>
+        </div>
+        <div class="role-cluster cluster-4" data-role="3">
+          <span class="role-badge">
+            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M8 1.5v11"/><path d="M3 5h10"/><path d="M5 5L3 9c0 1 1 1.5 2 1.5s2-.5 2-1.5L5 5z"/><path d="M11 5L9 9c0 1 1 1.5 2 1.5s2-.5 2-1.5L11 5z"/></svg>
+            Law Firms
+          </span>
+        </div>
+        <div class="role-cluster cluster-5" data-role="4">
+          <span class="role-badge">
+            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="5" r="2.5"/><path d="M3 14v-1a4 4 0 0 1 4-4h2a4 4 0 0 1 4 4v1"/></svg>
+            Auditor
+          </span>
+        </div>
       </div>
 
       <!-- Bottom stat strip -->
@@ -628,13 +901,6 @@
         <h2 class="module-title">Every step, visible end-to-end.</h2>
         <p class="module-desc">From the moment a request is created to the moment confirmation is returned, each step is captured, timestamped, and traceable in the same workspace.</p>
       </div>
-      <button class="module-replay" data-replay="chain" type="button">
-        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M2 8a6 6 0 0 1 10.24-4.24L14 5.5"/>
-          <path d="M14 2v3.5h-3.5"/>
-        </svg>
-        Replay
-      </button>
     </div>
 
     <div class="chain2-stage">
@@ -753,13 +1019,6 @@
         <h2 class="module-title">From three weeks of chasing to four days of confirmation.</h2>
         <p class="module-desc">Manual workflows stall waiting for emails, signatures, and follow-ups. TR Confirmation collapses that timeline into a few days, with no manual outreach in between.</p>
       </div>
-      <button class="module-replay" data-replay="compression" type="button">
-        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M2 8a6 6 0 0 1 10.24-4.24L14 5.5"/>
-          <path d="M14 2v3.5h-3.5"/>
-        </svg>
-        Replay
-      </button>
     </div>
 
     <div class="comp2-stage">
@@ -819,13 +1078,6 @@
         <h2 class="module-title">Send once. Confirm hundreds.</h2>
         <p class="module-desc">Build a cart of requests across every client engagement, send it as one submission, and watch each confirmation come back into the same dashboard.</p>
       </div>
-      <button class="module-replay" data-replay="bulk" type="button">
-        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M2 8a6 6 0 0 1 10.24-4.24L14 5.5"/>
-          <path d="M14 2v3.5h-3.5"/>
-        </svg>
-        Replay
-      </button>
     </div>
 
     <div class="bulk2-stage" id="bulk2-stage">
@@ -913,13 +1165,6 @@
         <h2 class="module-title">One signer. One signature. Every engagement.</h2>
         <p class="module-desc">When the same officer signs across multiple clients, Super Signer groups them all into a single authorization, done with one signature for the entire batch.</p>
       </div>
-      <button class="module-replay" data-replay="signer" type="button">
-        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M2 8a6 6 0 0 1 10.24-4.24L14 5.5"/>
-          <path d="M14 2v3.5h-3.5"/>
-        </svg>
-        Replay
-      </button>
     </div>
 
     <div class="signer2-stage">
@@ -1247,14 +1492,15 @@
 
 
 
+<!-- Closing CTA -->
+<section class="closing-cta" id="mod-closing" data-screen-label="Closing CTA">
+  <h2>Built around the way auditors actually work.</h2>
+  <p class="sub">Join 1.5M+ auditors. Connect to 4,000+ banks. Get started in minutes.</p>
+  <a class="btn-primary-lg" href="#">Create Free Account</a>
+</section>
+
 <footer class="page-footer">
   <div>© Thomson Reuters Confirmation · Animation Modules</div>
-  <div class="legend">
-    <span class="swatch" style="--c: #D64000">TR Orange #D64000</span>
-    <span class="swatch" style="--c: #F9A000">Amber #F9A000</span>
-    <span class="swatch" style="--c: #17B26A">Confirmed #17B26A</span>
-    <span class="swatch" style="--c: #101828">Heading #101828</span>
-  </div>
 </footer>
 
 <!-- Tweaks mount -->
@@ -1277,5 +1523,44 @@
 <script src="modules/newmods.js"></script>
 <script src="modules/app.js"></script>
 
+<script>
+(function(){
+  var QUOTES = [
+    { q: "A guaranteed response from the network means we stopped chasing banks entirely. The evidence just shows up, verified and ready for review.", ini: "JS", nm: "Jack Snyder", rl: "CPA \u00b7 Audit partner" },
+    { q: "We trust the confirmations because they come straight from the source. That's the part our reviewers care about most.", ini: "AH", nm: "Andy Hines", rl: "CPA \u00b7 Senior manager" },
+    { q: "The Super Signer alone gave one of our bank reviewers his afternoons back. He used to sign each request individually, hundreds of times a week.", ini: "RM", nm: "Rachel Moreno", rl: "Bank operations \u00b7 Confirmation lead" }
+  ];
+  var ARROW = '<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8h10M9 5l3 3-3 3"/></svg>';
+  var grid = document.getElementById('tst2-grid'), dots = document.getElementById('tst2-dots');
+  if (!grid) return;
+  var offset = 0;
+  function slots(){ return parseInt(document.body.dataset.tst || '1', 10); }
+  function render(){
+    var n = slots(), centre = n > 1 ? Math.floor((n - 1) / 2) : -1, html = '';
+    for (var i = 0; i < n; i++) {
+      var d = QUOTES[(offset + i) % QUOTES.length];
+      html += '<a class="tst2-card' + (i === centre ? ' is-center' : '') + '" href="#">' +
+        '<div class="mark">&ldquo;</div><p class="q">' + d.q + '</p>' +
+        '<span class="tst2-cta">Read their story ' + ARROW + '</span>' +
+        '<div class="by"><div class="ini">' + d.ini + '</div><div class="who">' +
+        '<span class="nm">' + d.nm + '</span><span class="rl">' + d.rl + '</span></div></div></a>';
+    }
+    grid.innerHTML = html;
+    if (dots) {
+      var dh = '';
+      for (var j = 0; j < QUOTES.length; j++) dh += '<button type="button" class="' + (j === offset % QUOTES.length ? 'on' : '') + '" aria-label="Testimonial ' + (j + 1) + '"></button>';
+      dots.innerHTML = dh;
+      Array.prototype.forEach.call(dots.children, function(btn, j){ btn.onclick = function(){ offset = j; render(); }; });
+    }
+  }
+  function step(d){ offset = (offset + d + QUOTES.length) % QUOTES.length; render(); }
+  var prev = document.querySelector('.tst2-nav.prev'), next = document.querySelector('.tst2-nav.next');
+  if (prev) prev.onclick = function(){ step(-1); };
+  if (next) next.onclick = function(){ step(1); };
+  window.TestimonialCarousel = { render: render };
+  render();
+  new MutationObserver(render).observe(document.body, { attributes: true, attributeFilter: ['data-tst'] });
+})();
+</script>
 </body>
 </html>
