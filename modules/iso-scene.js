@@ -10,12 +10,17 @@
   const INK = '#1B2433';
 
   // ── flat brand palette ──
+  // Blue-led palette: the illustration stays cool so the orange Get Started
+  // button is the only warm element on the screen.
   const C = {
     platTop: '#F2F4F7', platSide: '#D7DBE0',
-    hubTop: '#D64000', hubSide: '#A02D00',
-    amberTop: '#FFFFFF', amberL: '#F9A000', amberR: '#D98200',
-    orgTop: '#FFFFFF', orgL: '#E5571A', orgR: '#C23800',
-    white: '#FFFFFF', soft: '#FFF1E8',
+    hubTop: '#D9E4EE', hubSide: '#A7B9C9', shieldFill: '#011B35',
+    // CLIENT — deliberately muted (less colourful than the auditor)
+    amberTop: '#FFFFFF', amberL: '#DDE3EA', amberR: '#C2CAD4',
+    // BANK — brand navy
+    orgTop: '#FFFFFF', orgL: '#1C4468', orgR: '#011B35',
+    blue: '#011B35', blueLight: '#2E6389', deepGreen: '#123121',
+    white: '#FFFFFF', soft: '#EFF4FA',
     line: '#D0D5DD', green: '#17B26A', greenBg: '#ECFDF3'
   };
 
@@ -85,11 +90,14 @@
 
   let ANCH = {};
 
+  // Client and auditor are swapped (auditor now sits out on the left, where the
+  // flow begins); auditor and bank pushed further out so the scene reads wider
+  // and less vertical, and the hub sits lower to close the vertical gap.
   const POS = {
-    hub:     { x: -4, y: -4 },
-    client:  { x: -1, y: 11 },
-    auditor: { x: 5,  y: 5 },
-    bank:    { x: 11, y: -1 }
+    hub:     { x: -2, y: -2 },
+    client:  { x: 9.5,  y: 9.5 },
+    auditor: { x: -3, y: 13 },
+    bank:    { x: 13, y: -3 }
   };
 
   function build() {
@@ -104,7 +112,7 @@
     ['client', 'auditor', 'bank'].forEach((k, i) => {
       const [hx, hy] = iso(POS.hub.x, POS.hub.y, 1.0);
       const [sx, sy] = iso(POS[k].x, POS[k].y, 1.0);
-      cg.appendChild(el('line', { x1: hx, y1: hy, x2: sx, y2: sy, stroke: '#D64000', 'stroke-width': 2, 'stroke-dasharray': '2 7', 'stroke-linecap': 'round', opacity: 0.4, class: 'iso-conn', 'data-idx': i }));
+      cg.appendChild(el('line', { x1: hx, y1: hy, x2: sx, y2: sy, stroke: C.blue, 'stroke-width': 2, 'stroke-dasharray': '2 7', 'stroke-linecap': 'round', opacity: 0.45, class: 'iso-conn', 'data-idx': i }));
     });
 
     // screen-space anchors for the sequential flow packet
@@ -141,8 +149,12 @@
       const [dx, dy] = disc(g, POS.auditor.x, POS.auditor.y, 2.3, C.platTop, C.platSide);
       const cx = dx, top = dy - 116, w = 84, h = 104;
       g.appendChild(el('rect', { x: cx - w / 2, y: top, width: w, height: h, rx: 9, fill: C.white, stroke: INK, 'stroke-width': 2.4 }));
-      g.appendChild(el('rect', { x: cx - 26, y: top + 16, width: 34, height: 8, rx: 4, fill: '#D64000' }));
-      [0, 1, 2].forEach(i => g.appendChild(el('rect', { x: cx - 26, y: top + 36 + i * 15, width: i === 1 ? 52 : 38, height: 6, rx: 3, fill: C.line })));
+      // colourful auditor: blue header band, amber + green data rows
+      g.appendChild(el('rect', { x: cx - w / 2, y: top, width: w, height: 22, rx: 9, fill: C.blue }));
+      g.appendChild(el('rect', { x: cx - w / 2, y: top + 13, width: w, height: 9, fill: C.blue }));
+      g.appendChild(el('rect', { x: cx - 26, y: top + 34, width: 44, height: 7, rx: 3.5, fill: '#F9A000' }));
+      g.appendChild(el('rect', { x: cx - 26, y: top + 48, width: 52, height: 7, rx: 3.5, fill: C.blueLight }));
+      g.appendChild(el('rect', { x: cx - 26, y: top + 62, width: 34, height: 7, rx: 3.5, fill: C.deepGreen }));
       const abadge = el('g', { id: 'badge-auditor', class: 'iso-badge' });
       abadge.appendChild(el('circle', { cx: cx + 24, cy: top + h - 16, r: 15, fill: C.greenBg, stroke: INK, 'stroke-width': 2 }));
       check(abadge, cx + 24, top + h - 15, 0.85, C.green);
@@ -158,7 +170,7 @@
       const gf = el('g', { id: 'iso-shield', class: 'iso-float iso-badge', style: '--d:.2s' });
       const bx = dx, by = dy;
       const w = 98, h = 116, top = by - 150;
-      gf.appendChild(el('path', { d: `M ${bx} ${top} l ${w / 2} ${h * 0.22} v ${h * 0.4} q 0 ${h * 0.34} ${-w / 2} ${h * 0.44} q ${-w / 2} ${-h * 0.10} ${-w / 2} ${-h * 0.44} v ${-h * 0.4} z`, fill: '#D64000', stroke: INK, 'stroke-width': 2.8, 'stroke-linejoin': 'round' }));
+      gf.appendChild(el('path', { d: `M ${bx} ${top} l ${w / 2} ${h * 0.22} v ${h * 0.4} q 0 ${h * 0.34} ${-w / 2} ${h * 0.44} q ${-w / 2} ${-h * 0.10} ${-w / 2} ${-h * 0.44} v ${-h * 0.4} z`, fill: C.shieldFill, stroke: INK, 'stroke-width': 2.8, 'stroke-linejoin': 'round' }));
       check(gf, bx, by - 74, 2.0, '#fff');
       g.appendChild(gf);
       svg.appendChild(g);
@@ -167,13 +179,10 @@
 
     // travelling packet (drawn on top) + step caption
     const pk = el('g', { id: 'iso-packet', opacity: 0 });
-    pk.appendChild(el('circle', { r: 12, fill: '#D64000', opacity: 0.16 }));
-    pk.appendChild(el('circle', { r: 6, fill: '#D64000', stroke: '#fff', 'stroke-width': 2 }));
+    pk.appendChild(el('circle', { r: 12, fill: C.blue, opacity: 0.16 }));
+    pk.appendChild(el('circle', { r: 6, fill: C.blue, stroke: '#fff', 'stroke-width': 2 }));
     pk.appendChild(el('path', { d: 'M 3.4 0 L -2.6 -3.4 L -2.6 3.4 Z', fill: '#fff' }));
     svg.appendChild(pk);
-
-    const cap = el('text', { id: 'iso-step-cap', x: 450, y: 566, 'text-anchor': 'middle', fill: '#475467', 'font-family': "'Inter',sans-serif", 'font-size': 13.5, 'font-weight': 600, opacity: 0 });
-    svg.appendChild(cap);
 
     // one-time styles for pulse + caption
     if (!document.getElementById('iso-flow-style')) {
@@ -181,8 +190,7 @@
       st.id = 'iso-flow-style';
       st.textContent = `.iso-badge{transform-box:fill-box;transform-origin:center;}
 @keyframes isoPulse{0%{transform:scale(1)}40%{transform:scale(1.26)}100%{transform:scale(1)}}
-.iso-badge.pulse{animation:isoPulse .6s cubic-bezier(.34,0,.1,1);}
-#iso-step-cap{transition:opacity .3s ease;}`;
+.iso-badge.pulse{animation:isoPulse .6s cubic-bezier(.34,0,.1,1);}`;
       document.head.appendChild(st);
     }
   }
@@ -191,12 +199,12 @@
   // Auditor initiates → up to Confirmation → out to Client → signed, back to
   // Confirmation → out to Bank → contact verified, evidence back → closes at Auditor.
   const SEQ = [
-    { from: 'auditor', to: 'hub',     cap: '1 · Auditor initiates the request' },
-    { from: 'hub',     to: 'client',  cap: '2 · Confirmation routes it to the Client' },
-    { from: 'client',  to: 'hub',     cap: '3 · Client signs — returned to Confirmation' },
-    { from: 'hub',     to: 'bank',    cap: '4 · Confirmation sends it to the Bank' },
-    { from: 'bank',    to: 'hub',     cap: '5 · Bank contact verified — evidence returns' },
-    { from: 'hub',     to: 'auditor', cap: '6 · Verified evidence closes with the Auditor' }
+    { from: 'auditor', to: 'hub' },
+    { from: 'hub',     to: 'client' },
+    { from: 'client',  to: 'hub' },
+    { from: 'hub',     to: 'bank' },
+    { from: 'bank',    to: 'hub' },
+    { from: 'hub',     to: 'auditor' }
   ];
   const SEG_MS = 1150, PAUSE_MS = 460;
   let raf = null, running = false, seqI = 0, segStart = 0, paused = false;
@@ -214,10 +222,8 @@
   function startFlow() {
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
     const pk = document.getElementById('iso-packet');
-    const cap = document.getElementById('iso-step-cap');
     if (!pk || !ANCH.hub) return;
     running = true; seqI = 0; segStart = 0; paused = false;
-    if (cap) cap.setAttribute('opacity', 1);
     function frame(t) {
       if (!running) return;
       if (!segStart) segStart = t;
@@ -230,7 +236,6 @@
       const ang = Math.atan2(b[1] - a[1], b[0] - a[0]) * 180 / Math.PI;
       pk.setAttribute('transform', `translate(${x} ${y}) rotate(${ang})`);
       pk.setAttribute('opacity', (p < 0.05 || p > 0.96) ? 0.15 : 1);
-      if (cap) cap.textContent = seg.cap;
       if (raw >= 1 && !paused) {
         paused = true;
         pulse(seg.to === 'hub' ? 'iso-shield' : 'badge-' + seg.to);
@@ -258,8 +263,6 @@
   }
   function reset() {
     stopFlow();
-    const cap = document.getElementById('iso-step-cap');
-    if (cap) cap.setAttribute('opacity', 0);
   }
   function finalState() { build(); startFlow(); }
 
