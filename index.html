@@ -461,6 +461,24 @@
   .wi2-head .nm-desc { max-width: 780px; }
 
   /* ══ Responsive ═══════════════════════════════════════════ */
+  /* Large desktop (1440px+): the hero was capping its copy at ~860px, leaving
+     big empty gutters. Go two-column — copy/CTA left, illustration right —
+     inside the same 1280px container the other modules use.
+     Laptop/tablet/mobile breakpoints are untouched. */
+  @media (min-width: 1440px) {
+    #mod-whatis .nm-inner {
+      display: grid;
+      grid-template-columns: minmax(0, 0.92fr) minmax(0, 1.08fr);
+      gap: 64px;
+      align-items: center;
+    }
+    #mod-whatis .wi2-head { text-align: left; margin: 0; }
+    #mod-whatis .wi2-head .nm-kicker { text-align: left; }
+    #mod-whatis .wi2-head .nm-title { max-width: 100%; margin-left: 0; margin-right: 0; font-size: 46px; }
+    #mod-whatis .wi2-head .nm-desc { max-width: 100%; margin-left: 0; margin-right: 0; }
+    #mod-whatis .wi2-cta { justify-content: flex-start; margin-top: 36px; }
+    #mod-whatis .wi2-scene { max-width: 100%; margin: 0; }
+  }
   @media (max-width: 760px) {
     .site-nav .links { display: none; }
     .site-nav { padding: 12px 24px; }
