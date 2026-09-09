@@ -1,0 +1,783 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>TR Confirmation · Animation Modules</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="styles/ui.css" />
+<link rel="stylesheet" href="styles/modules.css" />
+<link rel="stylesheet" href="styles/site.css" />
+<link rel="stylesheet" href="styles/new-modules.css" />
+<style>
+  /* ── Tokens ──────────────────────────────────────────────── */
+  :root {
+    --orange: #D64000;
+    --orange-hover: #B53400;
+    --orange-10: rgba(214, 64, 0, 0.10);
+    --orange-15: rgba(214, 64, 0, 0.15);
+    --orange-20: rgba(214, 64, 0, 0.20);
+    --orange-30: rgba(214, 64, 0, 0.30);
+    --orange-80: rgba(214, 64, 0, 0.80);
+    --amber: #F9A000;
+    --green: #17B26A;
+    --green-bg: #ECFDF3;
+    --green-text: #027A48;
+
+    --n-900: #101828;
+    --n-700: #344054;
+    --n-600: #475467;
+    --n-500: #667085;
+    --n-400: #98A2B3;
+    --n-300: #D0D5DD;
+    --n-200: #EAECF0;
+    --n-100: #F2F4F7;
+    --n-50:  #F9FAFB;
+
+    --font-heading: 'Clario', 'Inter', Georgia, serif;
+    --font-body: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+
+    --shadow-md: 0 4px 8px -2px rgba(16,24,40,0.10), 0 2px 4px -2px rgba(16,24,40,0.06);
+    --shadow-orange: 0 4px 16px rgba(214, 64, 0, 0.15);
+    --shadow-orange-soft: 0 4px 16px rgba(214, 64, 0, 0.10);
+
+    --ease-out: cubic-bezier(0.34, 0, 0.10, 1);
+  }
+
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    font-family: var(--font-body);
+    color: var(--n-600);
+    background: #fff;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* ── Page header / footer ─────────────────────────────────── */
+  .page-header {
+    border-bottom: 1px solid var(--n-200);
+    padding: 24px 64px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+  }
+  .page-header .brand {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .page-header .brand-mark {
+    width: 28px;
+    height: 28px;
+  }
+  .page-header .brand-name {
+    font-family: var(--font-body);
+    font-weight: 700;
+    font-size: 14px;
+    color: var(--n-900);
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+  }
+  .page-header .brand-name span {
+    color: var(--orange);
+    font-family: var(--font-heading);
+    font-weight: 500;
+    font-size: 18px;
+    margin-left: 10px;
+    letter-spacing: -0.01em;
+    text-transform: none;
+  }
+  .page-header .meta {
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--n-500);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  /* ── Modules ──────────────────────────────────────────────── */
+  .module {
+    padding: 88px 64px;
+    border-bottom: 1px solid var(--n-200);
+    position: relative;
+  }
+  .module--alt { background: var(--n-50); }
+  .module:last-of-type { border-bottom: none; }
+  .module-inner {
+    max-width: 1280px;
+    margin: 0 auto;
+  }
+  .module-header {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 24px;
+    align-items: end;
+    margin-bottom: 40px;
+  }
+  .module-kicker {
+    font-family: var(--font-body);
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--orange);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin: 0 0 10px 0;
+  }
+  .module-title {
+    font-family: var(--font-heading);
+    font-size: 32px;
+    font-weight: 500;
+    color: var(--n-900);
+    letter-spacing: -0.02em;
+    margin: 0;
+    line-height: 1.15;
+  }
+  .module-desc {
+    font-family: var(--font-body);
+    font-size: 14px;
+    color: var(--n-600);
+    line-height: 1.55;
+    margin: 12px 0 0 0;
+    max-width: 580px;
+  }
+  .module-replay {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 7px 14px;
+    border-radius: 9999px;
+    border: 1px solid var(--n-200);
+    background: #fff;
+    color: var(--n-700);
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    font-family: var(--font-body);
+    transition: all 200ms var(--ease-out);
+  }
+  .module-replay:hover {
+    border-color: var(--orange);
+    color: var(--orange);
+  }
+  .module-replay svg { width: 13px; height: 13px; }
+
+  .page-footer {
+    padding: 36px 64px;
+    color: var(--n-500);
+    font-size: 12px;
+    display: flex;
+    gap: 24px;
+    justify-content: space-between;
+    border-top: 1px solid var(--n-200);
+    background: #fff;
+  }
+  .page-footer .legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 18px;
+  }
+  .page-footer .swatch {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-family: var(--font-body);
+    font-size: 11px;
+    color: var(--n-600);
+  }
+  .page-footer .swatch::before {
+    content: '';
+    width: 10px;
+    height: 10px;
+    border-radius: 2px;
+    background: var(--c, var(--n-300));
+  }
+
+  /* Reduced motion */
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0.001ms !important;
+      transition-duration: 0.001ms !important;
+      animation-iteration-count: 1 !important;
+    }
+  }
+
+  /* Internal review notes (Forty team only — strip in prod) */
+  .internal-note {
+    position: relative;
+    margin: 0 0 20px 0;
+    padding: 10px 14px 10px 38px;
+    background: #FFFBEB;
+    border: 1px dashed #FCD34D;
+    border-radius: 8px;
+    font-family: 'Inter', sans-serif;
+    font-size: 12px;
+    line-height: 1.45;
+    color: #78350F;
+    max-width: 720px;
+  }
+  .internal-note::before {
+    content: 'INTERNAL';
+    position: absolute;
+    top: 50%;
+    left: 10px;
+    transform: translateY(-50%);
+    font-size: 8px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    color: #92400E;
+    background: #FDE68A;
+    padding: 3px 5px;
+    border-radius: 3px;
+  }
+  .internal-note strong { color: #451A03; font-weight: 600; }
+  .internal-note em { font-style: normal; color: #92400E; font-weight: 600; }
+  body.hide-notes .internal-note { display: none; }
+</style>
+<style id="michael-overrides">
+  /* Scoped overrides for Michael's review file only — do not affect index.html */
+  /* Comment 3: relocate Network role badges into a clean labelled row
+     (they previously floated at the perimeter and overlapped the bullets) */
+  #mod-network .role-strip {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: center;
+    align-items: center;
+    margin: 32px 0 4px;
+    padding-top: 26px;
+    border-top: 1px solid var(--n-200);
+  }
+  #mod-network .role-strip .strip-label {
+    width: 100%;
+    text-align: center;
+    font-family: var(--font-body);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--n-500);
+    margin-bottom: 6px;
+  }
+  #mod-network .role-strip .role-cluster {
+    position: static !important;
+    inset: auto !important;
+    top: auto !important;
+    bottom: auto !important;
+    left: auto !important;
+    right: auto !important;
+    transform: none !important;
+    opacity: 1 !important;
+  }
+</style>
+<style id="feedback-additions">
+  /* ══ Sticky top nav — matches TR main-page header ══════════ */
+  .site-nav {
+    position: sticky; top: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    gap: 24px; padding: 15px 48px;
+    background: rgba(255,255,255,0.94);
+    backdrop-filter: saturate(160%) blur(10px);
+    -webkit-backdrop-filter: saturate(160%) blur(10px);
+    border-bottom: 1px solid var(--n-200);
+  }
+  .site-nav .brand { display: flex; align-items: center; gap: 11px; text-decoration: none; }
+  .site-nav .brand .brand-logo { height: 26px; display: block; }
+  .site-nav .brand .brand-fallback { display: none; align-items: center; gap: 11px; }
+  .site-nav .brand .mark { width: 30px; height: 30px; display: block; flex-shrink: 0; }
+  .site-nav .brand .name {
+    font-family: var(--font-body); font-weight: 700; font-size: 19px;
+    color: var(--n-900); letter-spacing: -0.02em; white-space: nowrap;
+  }
+  .site-nav .links { display: flex; align-items: center; gap: 30px; }
+  .site-nav .links a {
+    display: inline-flex; align-items: center; gap: 5px;
+    font-family: var(--font-body); font-size: 15px; font-weight: 500;
+    color: #404040; text-decoration: none; transition: color 200ms var(--ease-out); white-space: nowrap;
+  }
+  .site-nav .links a .caret { width: 11px; height: 11px; opacity: 0.6; }
+  .site-nav .links a:hover { color: var(--orange); }
+  .site-nav .actions { display: flex; align-items: center; gap: 18px; }
+  .site-nav .lang { display: inline-flex; align-items: center; gap: 6px; font-family: var(--font-body); font-size: 15px; font-weight: 500; color: #404040; cursor: pointer; white-space: nowrap; }
+  .site-nav .lang svg { width: 15px; height: 15px; }
+  .site-nav .help {
+    width: 26px; height: 26px; border-radius: 50%; background: var(--n-900);
+    color: #fff; display: grid; place-items: center; font-size: 13px; font-weight: 700; cursor: pointer;
+  }
+  .site-nav .signin {
+    font-family: var(--font-body); font-size: 15px; font-weight: 700; color: #fff;
+    background: var(--orange); padding: 10px 22px; border-radius: 6px; text-decoration: none;
+    transition: background 200ms var(--ease-out); white-space: nowrap;
+  }
+  .site-nav .signin:hover { background: var(--orange-hover); }
+
+  /* ══ Module 01 — prominent Get Started (high up) ═══════════ */
+  .wi2-cta { display: flex; justify-content: center; gap: 14px; margin-top: 30px; flex-wrap: wrap; }
+  .btn-primary-lg {
+    display: inline-flex; align-items: center; gap: 9px;
+    background: var(--orange); color: #fff; font-family: var(--font-body);
+    font-size: 16px; font-weight: 600; padding: 15px 30px; border-radius: 8px;
+    text-decoration: none; box-shadow: var(--shadow-orange);
+    transition: background 200ms var(--ease-out), transform 150ms var(--ease-out);
+  }
+  .btn-primary-lg:hover { background: var(--orange-hover); transform: translateY(-1px); }
+  .btn-primary-lg svg { width: 17px; height: 17px; }
+  .btn-secondary-lg {
+    display: inline-flex; align-items: center; gap: 9px;
+    background: #fff; color: var(--n-900); border: 1px solid var(--n-300);
+    font-family: var(--font-body); font-size: 16px; font-weight: 600;
+    padding: 15px 30px; border-radius: 8px; text-decoration: none;
+    transition: border-color 200ms var(--ease-out), color 200ms var(--ease-out);
+  }
+  .btn-secondary-lg:hover { border-color: var(--orange); color: var(--orange); }
+  /* second button = "option on other pages" — off on the homepage by default */
+  .wi2-cta .btn-secondary-lg { display: none; }
+  body[data-second-btn="on"] .wi2-cta .btn-secondary-lg { display: inline-flex; }
+
+  /* ══ Logo section (its own block, toggled OFF until launch) ═ */
+  #mod-logos { display: none; }
+  body[data-logos="on"] #mod-logos { display: block; }
+  #mod-logos .tr-head { margin-bottom: 36px; }
+
+  /* ══ Video section (YouTube) ══════════════════════════════ */
+  .video-sec { padding: 96px 64px; border-bottom: 1px solid var(--n-200); background: var(--n-900); }
+  .video-inner { max-width: 1000px; margin: 0 auto; text-align: center; }
+  .video-sec .nm-kicker { color: var(--amber); text-align: center; }
+  .video-sec .nm-title { color: #fff; max-width: 720px; margin: 0 auto; }
+  .video-sec .nm-desc { color: rgba(255,255,255,0.72); margin: 16px auto 0; max-width: 620px; }
+  .video-frame {
+    position: relative; width: 100%; aspect-ratio: 16 / 9; margin-top: 40px;
+    border-radius: 16px; overflow: hidden; background: #000;
+    box-shadow: 0 34px 70px -22px rgba(0,0,0,0.55);
+  }
+  .video-frame iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+  .video-facade { position: absolute; inset: 0; display: block; text-decoration: none; }
+  .video-facade img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+  .video-facade::after { content: ''; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(0,0,0,0.05), rgba(0,0,0,0.45)); }
+  .video-facade .play {
+    position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+    width: 58px; height: 58px; border-radius: 50%; background: var(--orange);
+    display: grid; place-items: center; box-shadow: 0 10px 26px rgba(0,0,0,0.38);
+    transition: transform 200ms var(--ease-out), background 200ms var(--ease-out); z-index: 1;
+  }
+  .video-facade:hover .play { transform: translate(-50%, -50%) scale(1.08); background: var(--orange-hover); }
+  .video-facade .play svg { width: 22px; height: 22px; fill: #fff; margin-left: 3px; }
+
+  /* ══ Module 04 — testimonials (1 dark / 2-3 white clickable) ═ */
+  .tr-actions { display: flex; justify-content: center; margin-top: 24px; }
+  .btn-outline {
+    display: inline-flex; align-items: center; gap: 8px;
+    border: 1px solid var(--n-300); color: var(--n-900); background: #fff;
+    font-family: var(--font-body); font-size: 15px; font-weight: 600;
+    padding: 12px 24px; border-radius: 8px; text-decoration: none; white-space: nowrap;
+    transition: border-color 200ms var(--ease-out), color 200ms var(--ease-out);
+  }
+  .btn-outline:hover { border-color: var(--orange); color: var(--orange); }
+  .btn-outline svg { width: 16px; height: 16px; }
+
+  .tst2-wrap { position: relative; margin-top: 8px; }
+  .tst2-grid { display: grid; gap: 24px; align-items: stretch; }
+  body[data-tst="1"] .tst2-grid { grid-template-columns: 1fr; max-width: 760px; margin: 0 auto; }
+  body[data-tst="2"] .tst2-grid { grid-template-columns: repeat(2, 1fr); }
+  body[data-tst="3"] .tst2-grid { grid-template-columns: repeat(3, 1fr); }
+  .tst2-card {
+    position: relative; border-radius: 20px; padding: 36px 34px; text-decoration: none;
+    display: flex; flex-direction: column; overflow: hidden;
+    background: #fff; color: #404040; border: 1px solid var(--n-200);
+    box-shadow: 0 10px 30px -12px rgba(214,64,0,0.28); cursor: pointer;
+    transition: background 420ms var(--ease-out), color 420ms var(--ease-out),
+                border-color 240ms var(--ease-out), box-shadow 240ms var(--ease-out), transform 240ms var(--ease-out);
+  }
+  .tst2-card:hover { border-color: var(--orange); box-shadow: 0 18px 46px -14px rgba(214,64,0,0.45); transform: translateY(-3px); }
+  .tst2-card .mark { font-family: var(--font-heading); font-size: 56px; font-weight: 700; line-height: 0.5; height: 26px; color: var(--orange); }
+  /* Testimonial copy matches Heading 4 / Module 03 item titles */
+  .tst2-card .q { font-family: var(--font-heading); font-size: 18px; font-weight: 600; line-height: 1.45; letter-spacing: -0.01em; margin: 22px 0 26px; text-wrap: pretty; color: inherit; flex: 1; }
+  .tst2-card .by { display: flex; align-items: center; gap: 12px; padding-top: 20px; border-top: 1px solid var(--n-100); }
+  .tst2-card .ini { width: 42px; height: 42px; border-radius: 50%; font-family: var(--font-body); font-weight: 700; font-size: 14px; display: grid; place-items: center; flex-shrink: 0; background: var(--orange-10); color: var(--orange); }
+  .tst2-card .who { display: flex; flex-direction: column; }
+  .tst2-card .nm { font-family: var(--font-body); font-size: 14px; font-weight: 600; }
+  .tst2-card .rl { font-family: var(--font-body); font-size: 12px; opacity: 0.7; }
+  .tst2-cta { display: inline-flex; align-items: center; gap: 6px; margin-top: 18px; font-family: var(--font-body); font-size: 13px; font-weight: 700; color: var(--orange); }
+  .tst2-cta svg { width: 14px; height: 14px; }
+  body[data-tst="1"] .tst2-cta { display: none; }
+  body[data-tst="1"] .tst2-nav, body[data-tst="1"] .tst2-dots { display: none; }
+  /* carousel highlight — the centre card is blue, the rest stay light */
+  .tst2-card.is-center { background: #011B35; color: #fff; border-color: #011B35; box-shadow: 0 18px 46px -16px rgba(1,27,53,0.55); }
+  .tst2-card.is-center .mark { color: var(--amber); }
+  .tst2-card.is-center .by { border-top-color: rgba(255,255,255,0.16); }
+  .tst2-card.is-center .ini { background: rgba(255,255,255,0.14); color: #fff; }
+  .tst2-card.is-center .tst2-cta { color: var(--amber); }
+  .tst2-nav {
+    position: absolute; top: 50%; transform: translateY(-50%); z-index: 3;
+    width: 44px; height: 44px; border-radius: 50%; background: #fff;
+    border: 1px solid var(--n-200); display: grid; place-items: center; cursor: pointer;
+    box-shadow: 0 6px 18px -6px rgba(16,24,40,0.28); transition: border-color 200ms var(--ease-out);
+  }
+  .tst2-nav:hover { border-color: var(--orange); }
+  .tst2-nav svg { width: 18px; height: 18px; stroke: #404040; }
+  .tst2-nav.prev { left: -22px; }
+  .tst2-nav.next { right: -22px; }
+  .tst2-dots { display: flex; justify-content: center; gap: 8px; margin-top: 28px; }
+  .tst2-dots button { width: 8px; height: 8px; border-radius: 50%; border: 0; padding: 0; cursor: pointer; background: var(--n-300); transition: background 200ms var(--ease-out), width 200ms var(--ease-out); }
+  .tst2-dots button.on { background: var(--orange); width: 22px; border-radius: 4px; }
+
+  /* ══ Closing CTA — flat orange band, no nested boxes ═══════ */
+  .closing-cta { background: var(--orange); padding: 104px 48px; text-align: center; }
+  .closing-cta h2 { font-family: var(--font-heading); font-size: 42px; font-weight: 500; line-height: 1.12; letter-spacing: -0.02em; color: #fff; margin: 0 auto; max-width: 820px; text-wrap: balance; }
+  .closing-cta .sub { font-family: 'Clario', Arial, sans-serif; font-size: 21px; line-height: 29px; color: rgba(255,255,255,0.88); margin: 20px auto 0; max-width: 640px; }
+  .closing-cta .btn-primary-lg { margin-top: 34px; background: #fff; color: var(--orange); box-shadow: none; }
+  .closing-cta .btn-primary-lg:hover { background: #FFF1E8; color: var(--orange); }
+
+  /* ══ Typography spec (matches confirmation.com) ═══════════ */
+  /* Titles → #404040 (not near-black). Dark-bg headings keep white below. */
+  .nm-title, .wi2-role, .wi-node-role, .wi-hub .label, .wn-card h3,
+  .wy-item h4, .module-title, .tr-quote .q, .tst2-card .q { color: #404040; }
+  /* Orange accents */
+  .nm-title em, .wi2-role em, .nm-kicker, .wi-node-role em { color: #d64000; }
+  /* Paragraphs → Clario-Regular, 21px/29px, #666 */
+  .nm-desc {
+    font-family: 'Clario', Arial, sans-serif; font-size: 21px; line-height: 29px; color: #666;
+  }
+  .wy-stat .cap { font-family: 'Clario', Arial, sans-serif; font-size: 21px; line-height: 29px; color: #fff; }
+  .wn-card p.body, .wy-item p {
+    font-family: 'Clario', Arial, sans-serif; font-size: 16px; line-height: 24px; color: #404040;
+  }
+  /* Buttons → fully rounded pill, sizes per confirmation.com (10px root: 1.9rem≈19px, .5rem 2.4rem≈5/24px) */
+  .btn-primary-lg, .btn-secondary-lg, .btn-outline, .site-nav .signin {
+    border-radius: 9999px; padding: .5rem 2.4rem; font-size: 19px; white-space: nowrap;
+  }
+  .btn-secondary-lg, .btn-outline { color: #404040; }
+  /* keep dark-surface headings/paragraphs readable (white) */
+  .video-sec .nm-title { color: #fff; }
+  .video-sec .nm-desc { color: rgba(255,255,255,0.72); }
+  body[data-cta-sub="off"] .closing-cta .sub { display: none; }
+  body[data-cta-space="compact"] .closing-cta { padding: 64px 48px; }
+
+  /* wider Module 01 text block */
+  .wi2-head .nm-title { max-width: 860px; }
+  .wi2-head .nm-desc { max-width: 780px; }
+
+  /* ══ Responsive ═══════════════════════════════════════════ */
+  /* Large desktop (1440px+): the hero was capping its copy at ~860px, leaving
+     big empty gutters. Go two-column — copy/CTA left, illustration right —
+     inside the same 1280px container the other modules use.
+     Laptop/tablet/mobile breakpoints are untouched. */
+  @media (min-width: 1440px) {
+    #mod-whatis .nm-inner {
+      display: grid;
+      grid-template-columns: minmax(0, 0.92fr) minmax(0, 1.08fr);
+      gap: 64px;
+      align-items: center;
+    }
+    #mod-whatis .wi2-head { text-align: left; margin: 0; }
+    #mod-whatis .wi2-head .nm-kicker { text-align: left; }
+    #mod-whatis .wi2-head .nm-title { max-width: 100%; margin-left: 0; margin-right: 0; font-size: 46px; }
+    #mod-whatis .wi2-head .nm-desc { max-width: 100%; margin-left: 0; margin-right: 0; }
+    #mod-whatis .wi2-cta { justify-content: flex-start; margin-top: 36px; }
+    #mod-whatis .wi2-scene { max-width: 100%; margin: 0; }
+  }
+  @media (max-width: 760px) {
+    .site-nav .links { display: none; }
+    .site-nav { padding: 12px 24px; }
+    .video-sec { padding: 64px 24px; }
+    .closing-cta h2 { font-size: 30px; }
+    .closing-cta { padding: 72px 24px; }
+    /* keep the module-01 flow arrows visible on mobile: the whole scene is one
+       SVG, so it scales down as a unit rather than dropping the connectors */
+    .wi2-scene { max-width: 100%; overflow: visible; }
+    .wi2-scene svg { overflow: visible; }
+    body[data-tst="2"] .tst2-grid, body[data-tst="3"] .tst2-grid { grid-template-columns: 1fr; }
+    .tst2-nav.prev { left: -6px; }
+    .tst2-nav.next { right: -6px; }
+  }
+</style>
+</head>
+<template id="__bundler_thumbnail" data-bg-color="#011B35">
+  <svg viewBox="0 0 1200 800" xmlns="http://www.w3.org/2000/svg">
+    <rect width="1200" height="800" fill="#011B35"/>
+    <path d="M600 250 L720 320 L720 460 L600 550 L480 460 L480 320 Z" fill="none" stroke="#D64000" stroke-width="14" stroke-linejoin="round"/>
+    <path d="M552 400 L588 440 L668 350" fill="none" stroke="#17B26A" stroke-width="18" stroke-linecap="round" stroke-linejoin="round"/>
+  </svg>
+</template>
+<body data-tst="1" data-logos="on" data-second-btn="off" data-cta-sub="on" data-cta-space="normal">
+
+<header class="site-nav" data-screen-label="Top nav">
+  <a class="brand" href="#" aria-label="Thomson Reuters Confirmation">
+    <img class="brand-logo" src="https://www.confirmation.com/wp-content/uploads/2024/07/tr_hrz_logo_rgb_color-1.svg" alt="Thomson Reuters" onerror="this.style.display='none';this.nextElementSibling.style.display='inline-flex'"/>
+    <span class="brand-fallback">
+      <span class="mark"><svg viewBox="0 0 32 32" fill="none"><g fill="#D64000"><circle cx="16" cy="2.5" r="2"/><circle cx="23.5" cy="5" r="1.6"/><circle cx="28" cy="11" r="1.6"/><circle cx="29" cy="17" r="2"/><circle cx="27" cy="23" r="1.6"/><circle cx="22" cy="27.5" r="1.6"/><circle cx="16" cy="29" r="2"/><circle cx="10" cy="27.5" r="1.6"/><circle cx="5" cy="23" r="1.6"/><circle cx="3" cy="17" r="2"/><circle cx="4" cy="11" r="1.6"/><circle cx="8.5" cy="5" r="1.6"/></g></svg></span>
+      <span class="name">Thomson Reuters</span>
+    </span>
+  </a>
+  <nav class="links">
+    <a href="#">Our Solutions <svg class="caret" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 4.5L6 7.5L9 4.5"/></svg></a>
+    <a href="#">Who We Help <svg class="caret" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 4.5L6 7.5L9 4.5"/></svg></a>
+    <a href="#">Resources <svg class="caret" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 4.5L6 7.5L9 4.5"/></svg></a>
+    <a href="#">About <svg class="caret" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 4.5L6 7.5L9 4.5"/></svg></a>
+  </nav>
+  <div class="actions">
+    <span class="lang"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4"><circle cx="8" cy="8" r="6.2"/><path d="M1.8 8h12.4M8 1.8c1.9 1.9 1.9 10.5 0 12.4M8 1.8c-1.9 1.9-1.9 10.5 0 12.4"/></svg> Language</span>
+    <span class="help">?</span>
+    <a class="signin" href="#">Sign In</a>
+  </div>
+</header>
+
+<!-- Module 01 (mod-whatis) -->
+<section class="nm-module" id="mod-whatis" data-screen-label="What is it">
+  <div class="nm-inner">
+    <div class="wi2-head">
+      <p class="nm-kicker">Module 01 · What is it<span class="nm-new">New</span></p>
+      <h2 class="nm-title">Financial confirmations, <em>connected</em>.</h2>
+      <p class="nm-desc">Client, auditor and bank each play a role, and Confirmation is the secure link that ties all three together. One request authorized at the source, verified evidence back in days.</p>
+      <div class="wi2-cta">
+        <a class="btn-primary-lg" href="#">Get Started <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8h10M9 5l3 3-3 3"/></svg></a>
+        <a class="btn-secondary-lg" href="#">Contact us</a>
+      </div>
+    </div>
+    <div class="wi2-scene">
+      <svg id="wi-iso" viewBox="0 0 900 580" preserveAspectRatio="xMidYMid meet" role="img" aria-label="Confirmation connects client, auditor and bank"></svg>
+    </div>
+  </div>
+</section>
+
+<!-- Module 03 (mod-whyus) -->
+<section class="nm-module nm-module--alt" id="mod-whyus" data-screen-label="Why get it from us">
+  <div class="nm-inner">
+    <div class="wy-layout">
+      <div class="wy-left">
+        <p class="nm-kicker">Module 03 · Why get it from us<span class="nm-new">New</span></p>
+        <h2 class="nm-title">Evidence you can <em>stand behind</em>.</h2>
+        <p class="nm-desc">The difference isn't just speed. It's the network, the follow-through, and the trust that comes with every confirmation.</p>
+
+        <div class="wy-stat">
+          <div class="wy-stat-inner">
+            <div class="num" id="wy-num">8,000<span>+</span></div>
+            <p class="cap">banks and financial institutions in the world's largest confirmation network, with a guaranteed response.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="wy-list">
+        <div class="wy-item">
+          <div class="wy-item-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="10"/><path d="m8 12 3 3 5-6"/>
+            </svg>
+          </div>
+          <div>
+            <h4>Guaranteed response from the world's largest bank network</h4>
+            <p>Over 8,000 in-network institutions are contracted to respond, so a request never goes unanswered.</p>
+          </div>
+        </div>
+
+        <div class="wy-item">
+          <div class="wy-item-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21 12a9 9 0 1 1-6.2-8.5"/><path d="M21 4v5h-5"/>
+            </svg>
+          </div>
+          <div>
+            <h4>We follow up with banks so you don't have to</h4>
+            <p>Automated reminders and direct relationships chase every outstanding request on your behalf.</p>
+          </div>
+        </div>
+
+        <div class="wy-item">
+          <div class="wy-item-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+            </svg>
+          </div>
+          <div>
+            <h4>Compliance with changing regulations and standards</h4>
+            <p>Built to keep pace with evolving audit and data-privacy requirements, so your evidence always holds up.</p>
+          </div>
+        </div>
+
+        <div class="wy-item">
+          <div class="wy-item-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><path d="m9 15 2 2 4-4"/>
+            </svg>
+          </div>
+          <div>
+            <h4>Trusted audit evidence you can stand behind</h4>
+            <p>Source-verified, tamper-evident confirmations that stand up to review and scrutiny.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Logo section (own block; toggled OFF until launch logos land) -->
+<section class="nm-module logo-strip" id="mod-logos" data-screen-label="Trusted by">
+  <div class="nm-inner">
+    <div class="tr-head">
+      <p class="nm-kicker">Trusted by</p>
+      <h2 class="nm-title">Relied on by audit teams worldwide.</h2>
+    </div>
+    <div class="tr-logos" id="tr-logos">
+      <div class="tr-logo"><span class="glyph"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="4" y="4" width="16" height="16" rx="3"/><path d="M8 12h8"/></svg></span><span class="wordmark">Northfield</span></div>
+      <div class="tr-logo"><span class="glyph"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="8"/><path d="M12 8v8"/></svg></span><span class="wordmark">Atlas&nbsp;&amp;&nbsp;Vance</span></div>
+      <div class="tr-logo"><span class="glyph"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 18 12 6l8 12z"/></svg></span><span class="wordmark">Meridian</span></div>
+      <div class="tr-logo"><span class="glyph"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 3 3 8v8l9 5 9-5V8z"/></svg></span><span class="wordmark">Cresta</span></div>
+      <div class="tr-logo"><span class="glyph"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="4" y="6" width="16" height="12" rx="2"/><path d="M4 11h16"/></svg></span><span class="wordmark">Halden&nbsp;&amp;&nbsp;Co</span></div>
+      <div class="tr-logo"><span class="glyph"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 2 4 7v10l8 5 8-5V7z"/><path d="M12 7v10"/></svg></span><span class="wordmark">Sterling</span></div>
+    </div>
+    <p class="tr-placeholder-note">Placeholder logos for mock-up only. Final firms &amp; banks to be confirmed by TR.</p>
+  </div>
+</section>
+
+<!-- Module 02 (mod-whoneeds) -->
+<section class="nm-module" id="mod-whoneeds" data-screen-label="Who needs it">
+  <div class="nm-inner">
+    <div class="wn-head">
+      <p class="nm-kicker">Module 02 · Who needs it<span class="nm-new">New</span></p>
+      <h2 class="nm-title">One platform. Three ways to verify.</h2>
+      <p class="nm-desc">Whether you're closing an audit, validating a balance, or verifying an asset, Confirmation gets you a trusted answer from the source.</p>
+    </div>
+
+    <div class="wn-grid">
+      <article class="wn-card">
+        <div class="wn-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><path d="m9 15 2 2 4-4"/>
+          </svg>
+        </div>
+        <h3>Bank confirmations</h3>
+        <p class="wn-lead">Simplify and accelerate your audit process.</p>
+        <p class="body">Confirmation delivers automated audit confirmations with a platform that's fast, simple, and secure.</p>
+      </article>
+
+      <article class="wn-card">
+        <div class="wn-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M3 3v18h18"/><path d="m7 14 3-3 3 3 5-6"/>
+          </svg>
+        </div>
+        <h3>Open banking</h3>
+        <p class="wn-lead">See the full financial picture.</p>
+        <p class="body">Access real-time account balances and transaction data to validate financial status with confidence.</p>
+      </article>
+
+      <article class="wn-card">
+        <div class="wn-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="m9 12 2 2 4-4"/>
+          </svg>
+        </div>
+        <h3>Asset verification</h3>
+        <p class="wn-lead">Verify critical financial data.</p>
+        <p class="body">Get a guaranteed response from in-network banks on bank references, verifications of deposit, mortgage reverifications, and government benefits eligibility (HUD).</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- Video section -->
+<section class="video-sec" id="mod-video" data-screen-label="Watch">
+  <div class="video-inner">
+    <h2 class="nm-title">See TR Confirmation in action.</h2>
+    <p class="nm-desc">A short walkthrough of how a request goes from created to confirmed — the whole loop in minutes, not weeks.</p>
+    <div class="video-frame">
+      <a class="video-facade" href="https://www.youtube.com/watch?v=WE9TAW_xG1Y" target="_blank" rel="noopener" aria-label="Watch the walkthrough on YouTube">
+        <img src="assets/video-poster-v2.png" alt="See TR Confirmation in action"/>
+        <span class="play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- Module 04 (mod-trust) — testimonials -->
+<section class="nm-module nm-module--alt" id="mod-trust" data-screen-label="Why trust us">
+  <div class="nm-inner">
+    <div class="tr-head">
+      <p class="nm-kicker">Module 04 · Why you can trust us<span class="nm-new">New</span></p>
+      <h2 class="nm-title">Relied on by audit teams worldwide.</h2>
+      <p class="nm-desc">From regional firms to global networks, finance and audit professionals trust Confirmation for evidence that holds up.</p>
+      <div class="tr-actions">
+        <a class="btn-outline" href="#">Customer Stories <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8h10M9 5l3 3-3 3"/></svg></a>
+      </div>
+    </div>
+
+    <div class="tst2-wrap">
+      <button class="tst2-nav prev" type="button" aria-label="Previous testimonial"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg></button>
+      <div class="tst2-grid" id="tst2-grid"></div>
+      <button class="tst2-nav next" type="button" aria-label="Next testimonial"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5l7 7-7 7"/></svg></button>
+      <div class="tst2-dots" id="tst2-dots"></div>
+    </div>
+  </section>
+
+
+
+
+<!-- Closing CTA -->
+<section class="closing-cta" id="mod-closing" data-screen-label="Closing CTA">
+  <h2>Built around the way auditors actually work.</h2>
+  <p class="sub">Join 1.5M+ auditors. Connect to 4,000+ banks. Get started in minutes.</p>
+  <a class="btn-primary-lg" href="#">Create Free Account</a>
+</section>
+
+<footer class="page-footer">
+  <div>© Thomson Reuters Confirmation · Animation Modules</div>
+</footer>
+
+<!-- Tweaks mount -->
+<div id="tweaks-mount"></div>
+
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+<script type="text/babel" src="tweaks-panel.jsx"></script>
+<script type="text/babel" src="tweaks.jsx"></script>
+
+<!-- Modules -->
+<script src="modules/iso-scene.js"></script>
+<script src="modules/newmods.js"></script>
+<script src="modules/app.js"></script>
+
+<script>
+(function(){
+  var QUOTES = [
+    { q: "A guaranteed response from the network means we stopped chasing banks entirely. The evidence just shows up, verified and ready for review.", ini: "JS", nm: "Jack Snyder", rl: "CPA \u00b7 Audit partner" },
+    { q: "We trust the confirmations because they come straight from the source. That's the part our reviewers care about most.", ini: "AH", nm: "Andy Hines", rl: "CPA \u00b7 Senior manager" },
+    { q: "The Super Signer alone gave one of our bank reviewers his afternoons back. He used to sign each request individually, hundreds of times a week.", ini: "RM", nm: "Rachel Moreno", rl: "Bank operations \u00b7 Confirmation lead" }
+  ];
+  var ARROW = '<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8h10M9 5l3 3-3 3"/></svg>';
+  var grid = document.getElementById('tst2-grid'), dots = document.getElementById('tst2-dots');
+  if (!grid) return;
+  var offset = 0;
+  function slots(){ return parseInt(document.body.dataset.tst || '1', 10); }
+  function render(){
+    var n = slots(), centre = n > 1 ? Math.floor((n - 1) / 2) : -1, html = '';
+    for (var i = 0; i < n; i++) {
+      var d = QUOTES[(offset + i) % QUOTES.length];
+      html += '<a class="tst2-card' + (i === centre ? ' is-center' : '') + '" href="#">' +
+        '<div class="mark">&ldquo;</div><p class="q">' + d.q + '</p>' +
+        '<span class="tst2-cta">Read their story ' + ARROW + '</span>' +
+        '<div class="by"><div class="ini">' + d.ini + '</div><div class="who">' +
+        '<span class="nm">' + d.nm + '</span><span class="rl">' + d.rl + '</span></div></div></a>';
+    }
+    grid.innerHTML = html;
+    if (dots) {
+      var dh = '';
+      for (var j = 0; j < QUOTES.length; j++) dh += '<button type="button" class="' + (j === offset % QUOTES.length ? 'on' : '') + '" aria-label="Testimonial ' + (j + 1) + '"></button>';
+      dots.innerHTML = dh;
+      Array.prototype.forEach.call(dots.children, function(btn, j){ btn.onclick = function(){ offset = j; render(); }; });
+    }
+  }
+  function step(d){ offset = (offset + d + QUOTES.length) % QUOTES.length; render(); }
+  var prev = document.querySelector('.tst2-nav.prev'), next = document.querySelector('.tst2-nav.next');
+  if (prev) prev.onclick = function(){ step(-1); };
+  if (next) next.onclick = function(){ step(1); };
+  window.TestimonialCarousel = { render: render };
+  render();
+  new MutationObserver(render).observe(document.body, { attributes: true, attributeFilter: ['data-tst'] });
+})();
+</script>
+</body>
+</html>
